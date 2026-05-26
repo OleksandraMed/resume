@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oleksandra Medvedieva — QA Automation Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f1117;
+    --ink-2: #3a3d4a;
+    --ink-3: #6b6f7e;
+    --bg: #f5f4f0;
+    --bg-2: #eceae4;
+    --bg-3: #e1dfd8;
+    --accent: #1a4fd6;
+    --accent-light: #dce6fb;
+    --accent-2: #0d9e6e;
+    --accent-2-light: #d6f2e9;
+    --accent-3: #c94a1b;
+    --accent-3-light: #fce8e0;
+    --tag-api: #1a4fd6;
+    --tag-ci: #0d9e6e;
+    --tag-auto: #7c3aed;
+    --tag-auto-light: #ede9fe;
+    --tag-db: #b45309;
+    --tag-db-light: #fef3c7;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Sora', sans-serif;
+    --radius: 6px;
+    --radius-lg: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: #f5f4f0;
+    padding: 3.5rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(26,79,214,0.18);
+    pointer-events: none;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(13,158,110,0.12);
+    pointer-events: none;
+  }
+
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .name {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .title-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    background: rgba(26,79,214,0.3);
+    color: #a5c0f8;
+    border: 1px solid rgba(26,79,214,0.5);
+    border-radius: 4px;
+    padding: 3px 10px;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.2rem;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    font-size: 13px;
+    color: #a9acba;
+  }
+
+  .contact-row a {
+    color: #a9acba;
+    text-decoration: none;
+    font-family: var(--mono);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color .2s;
+  }
+  .contact-row a:hover { color: #fff; }
+
+  .yoe-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 2px solid rgba(26,79,214,0.5);
+    background: rgba(26,79,214,0.12);
+    flex-shrink: 0;
+  }
+  .yoe-badge .num {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1;
+    color: #a5c0f8;
+  }
+  .yoe-badge .label {
+    font-size: 9px;
+    font-family: var(--mono);
+    color: #6b7490;
+    letter-spacing: 0.06em;
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  /* ── NAV PILLS ── */
+  nav {
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--bg-3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0 1rem;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  nav a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    text-decoration: none;
+    padding: 12px 16px;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  section { margin-bottom: 2.5rem; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--bg-3);
+  }
+
+  /* ── SUMMARY ── */
+  .summary-text {
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.75;
+    background: var(--bg-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.25rem;
+  }
+
+  /* ── EXPERIENCE ── */
+  .job {
+    border: 1px solid var(--bg-3);
+    border-radius: var(--radius-lg);
+    background: #fff;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.2rem;
+    transition: box-shadow .2s;
+  }
+  .job:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .job-company {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .job-role {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-bottom: 0.7rem;
+  }
+  .job-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    white-space: nowrap;
+    padding-top: 3px;
+  }
+
+  .stack-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 0.85rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .tag-api { background: var(--accent-light); color: var(--tag-api); }
+  .tag-ci  { background: var(--accent-2-light); color: #085738; }
+  .tag-auto { background: var(--tag-auto-light); color: #4c1d95; }
+  .tag-db  { background: var(--tag-db-light); color: var(--tag-db); }
+  .tag-gray { background: var(--bg-2); color: var(--ink-2); }
+
+  .job-bullets {
+    list-style: none;
+    padding: 0;
+  }
+  .job-bullets li {
+    font-size: 14px;
+    color: var(--ink-2);
+    padding: 4px 0 4px 18px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .job-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--bg-3);
+    font-size: 13px;
+    top: 5px;
+  }
+  .job-bullets li strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar { }
+
+  .skill-block {
+    background: #fff;
+    border: 1px solid var(--bg-3);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-cat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  /* highlight key skills */
+  .key-skill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: var(--radius);
+    font-weight: 500;
+  }
+  .key-skill-api { background: var(--accent-light); color: var(--tag-api); border: 1px solid #b8cef5; }
+  .key-skill-ci  { background: var(--accent-2-light); color: #085738; border: 1px solid #9fe1cb; }
+  .key-skill-auto { background: var(--tag-auto-light); color: #4c1d95; border: 1px solid #c4b5fd; }
+
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .dot-api { background: var(--tag-api); }
+  .dot-ci  { background: #0d9e6e; }
+  .dot-auto { background: #7c3aed; }
+
+  /* cert & edu */
+  .cert-card {
+    background: #fff;
+    border: 1px solid var(--bg-3);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1.2rem;
+  }
+  .cert-name { font-weight: 500; font-size: 14px; margin-bottom: 2px; }
+  .cert-sub  { font-size: 12px; color: var(--ink-3); font-family: var(--mono); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: #6b7490;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 1.5rem 1rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    main {
+      grid-template-columns: 1fr;
+      padding: 1.5rem 1rem 3rem;
+    }
+    .header-inner { grid-template-columns: 1fr; }
+    .yoe-badge { display: none; }
+    .name { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="title-tag">SDET · QA Automation</div>
+      <h1 class="name">Oleksandra<br>Medvedieva</h1>
+      <div class="contact-row">
+        <a href="mailto:medvedieva.oleksandra@gmail.com">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4h16v16H4z" rx="2"/><path d="m4 8 8 5 8-5"/></svg>
+          medvedieva.oleksandra@gmail.com
+        </a>
+        <a href="tel:+380931463514">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          +380 93 146 3514
+        </a>
+        <span>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Kyiv, Ukraine
+        </span>
+      </div>
+    </div>
+    <div class="yoe-badge">
+      <span class="num">5+</span>
+      <span class="label">years<br>exp.</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#summary">Summary</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+  </div>
+</nav>
+
+<main>
+  <!-- LEFT COLUMN -->
+  <div>
+
+    <section id="summary">
+      <div class="section-label">Summary</div>
+      <div class="summary-text">
+        QA Automation Engineer with <strong>5+ years</strong> of experience in manual and automated testing of web applications and backend services in Agile (Scrum) environments. Specialised in <strong>Java-based automation</strong>, REST API testing, CI/CD pipeline integration, and SQL backend verification. Proven track record across B2B product teams from fintech to gaming.
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-label">Experience</div>
+
+      <!-- SoftConstruct -->
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <div class="job-company">SoftConstruct Ukraine</div>
+            <div class="job-role">General QA · Kyiv, Ukraine</div>
+          </div>
+          <div class="job-date">Nov 2024 — Present</div>
+        </div>
+        <div class="stack-row">
+          <span class="key-skill key-skill-api"><span class="dot dot-api"></span>REST Assured</span>
+          <span class="key-skill key-skill-auto"><span class="dot dot-auto"></span>Playwright</span>
+          <span class="key-skill key-skill-ci"><span class="dot dot-ci"></span>GitLab CI</span>
+          <span class="tag tag-auto">TestNG</span>
+          <span class="tag tag-gray">Kafka</span>
+          <span class="tag tag-db">SQL / Oracle</span>
+          <span class="tag tag-gray">Allure</span>
+          <span class="tag tag-gray">Zephyr</span>
+          <span class="tag tag-gray">Maven (multi-module)</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Design, implement, and maintain <strong>automated API &amp; web test cases</strong> using Java, TestNG, REST Assured, and Playwright in a multi-module Maven project.</li>
+          <li><strong>API testing</strong> — validate responses, business logic, JSON schemas, and data consistency for REST services; manual validation of WebSocket and Kafka event flows.</li>
+          <li>Integrate test suites into <strong>CI/CD pipelines (GitLab CI)</strong> and analyse execution results via Allure reports.</li>
+          <li>Create and maintain <strong>test documentation</strong> (test cases, checklists, scenarios) in Zephyr aligned to requirements.</li>
+          <li>Perform regression, smoke, and exploratory testing; participate in sprint planning, stand-ups, grooming, and retrospectives.</li>
+          <li><strong>SQL backend verification</strong> against Oracle databases to ensure data integrity.</li>
+        </ul>
+      </div>
+
+      <!-- LeanSquad -->
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <div class="job-company">LeanSquad</div>
+            <div class="job-role">QA Automation Engineer · Kyiv, Ukraine</div>
+          </div>
+          <div class="job-date">May 2023 — Aug 2024</div>
+        </div>
+        <div class="stack-row">
+          <span class="key-skill key-skill-api"><span class="dot dot-api"></span>REST Assured</span>
+          <span class="key-skill key-skill-ci"><span class="dot dot-ci"></span>AWS CodeBuild</span>
+          <span class="key-skill key-skill-auto"><span class="dot dot-auto"></span>Selenium WebDriver</span>
+          <span class="tag tag-gray">TestNG</span>
+          <span class="tag tag-db">SQL</span>
+          <span class="tag tag-gray">Maven</span>
+          <span class="tag tag-gray">Jira</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Developed and maintained <strong>UI &amp; API automation frameworks</strong> using Java, Selenium WebDriver, TestNG, and REST Assured.</li>
+          <li>Automated REST API testing — validated responses, business logic, and data consistency across services.</li>
+          <li>Executed automated tests in <strong>CI/CD pipelines via AWS CodeBuild</strong>; supported distributed test runs.</li>
+          <li>Performed <strong>SQL-based backend validation</strong> to ensure data integrity.</li>
+          <li>Wrote and maintained test cases and documentation aligned with business requirements in Jira.</li>
+          <li>Functional, regression, and smoke testing; active Scrum team participant.</li>
+        </ul>
+      </div>
+
+      <!-- CIFINITI -->
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <div class="job-company">CIFINITI</div>
+            <div class="job-role">SDET · Tysons, VA, USA (Remote)</div>
+          </div>
+          <div class="job-date">Apr 2021 — May 2023</div>
+        </div>
+        <div class="stack-row">
+          <span class="key-skill key-skill-api"><span class="dot dot-api"></span>REST Assured</span>
+          <span class="key-skill key-skill-ci"><span class="dot dot-ci"></span>Jenkins</span>
+          <span class="key-skill key-skill-auto"><span class="dot dot-auto"></span>Selenium + JUnit</span>
+          <span class="tag tag-auto">Cucumber / BDD</span>
+          <span class="tag tag-db">JDBC / SQL</span>
+          <span class="tag tag-gray">GitHub</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Built and maintained <strong>Java-based UI automation</strong> using Selenium, JUnit, and Page Object Model.</li>
+          <li>Developed <strong>API automation tests</strong> using REST Assured; implemented BDD &amp; data-driven testing with Cucumber.</li>
+          <li>Integrated automated tests into <strong>Jenkins CI pipelines</strong>.</li>
+          <li>Conducted manual and automated testing (functional, regression, end-to-end).</li>
+          <li>SQL/JDBC backend validation; maintained automation suites in <strong>Git</strong>; collaborated with cross-functional teams.</li>
+        </ul>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="sidebar">
+
+    <section id="skills">
+      <div class="section-label">Skills</div>
+
+      <div class="skill-block">
+        <div class="skill-cat">API &amp; Web Testing</div>
+        <div class="skill-tags">
+          <span class="key-skill key-skill-api" style="margin-bottom:4px"><span class="dot dot-api"></span>REST Assured</span>
+          <span class="tag tag-api">Postman</span>
+          <span class="tag tag-api">Jackson / JSON</span>
+          <span class="tag tag-gray">WebSocket</span>
+          <span class="tag tag-gray">Kafka (validation)</span>
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-cat">Automation Frameworks</div>
+        <div class="skill-tags">
+          <span class="key-skill key-skill-auto" style="margin-bottom:4px"><span class="dot dot-auto"></span>Playwright</span>
+          <span class="tag tag-auto">Selenium WebDriver</span>
+          <span class="tag tag-auto">TestNG</span>
+          <span class="tag tag-auto">JUnit</span>
+          <span class="tag tag-auto">Cucumber / BDD</span>
+          <span class="tag tag-auto">Selenium Grid</span>
+          <span class="tag tag-auto">POM</span>
+          <span class="tag tag-auto">Data-Driven</span>
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-cat">CI / CD &amp; Build</div>
+        <div class="skill-tags">
+          <span class="key-skill key-skill-ci" style="margin-bottom:4px"><span class="dot dot-ci"></span>GitLab CI</span>
+          <span class="key-skill key-skill-ci" style="margin-bottom:4px"><span class="dot dot-ci"></span>Jenkins</span>
+          <span class="tag tag-ci">AWS CodeBuild</span>
+          <span class="tag tag-ci">Maven</span>
+          <span class="tag tag-ci">Gradle</span>
+          <span class="tag tag-ci">Git / GitHub</span>
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-cat">Test Management</div>
+        <div class="skill-tags">
+          <span class="tag tag-gray">Jira</span>
+          <span class="tag tag-gray">Zephyr</span>
+          <span class="tag tag-gray">TestRail</span>
+          <span class="tag tag-gray">Allure</span>
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-cat">Databases</div>
+        <div class="skill-tags">
+          <span class="tag tag-db">Oracle</span>
+          <span class="tag tag-db">SQL</span>
+          <span class="tag tag-db">JDBC</span>
+          <span class="tag tag-db">SQL Developer</span>
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-cat">Programming &amp; Tooling</div>
+        <div class="skill-tags">
+          <span class="tag tag-gray">Java</span>
+          <span class="tag tag-gray">Gherkin</span>
+          <span class="tag tag-gray">IntelliJ IDEA</span>
+          <span class="tag tag-gray">DataFaker</span>
+          <span class="tag tag-gray">AssertJ</span>
+          <span class="tag tag-gray">SLF4J</span>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="education">
+      <div class="section-label">Certification</div>
+      <div class="cert-card">
+        <div class="cert-name">ISTQB® Certified Tester</div>
+        <div class="cert-sub">Foundation Level 4.0</div>
+      </div>
+
+      <div class="section-label">Education</div>
+      <div class="cert-card">
+        <div class="cert-name">Specialist Diploma in History</div>
+        <div class="cert-sub">I.I. Mechnikov National University<br>Odesa, Ukraine · 2010–2015</div>
+      </div>
+    </section>
+
+  </aside>
+</main>
+
+<footer>
+  Oleksandra Medvedieva · medvedieva.oleksandra@gmail.com · +380 93 146 3514
+</footer>
+
+</body>
+</html>
